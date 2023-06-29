@@ -1,20 +1,31 @@
 import { Pagination } from "react-bootstrap";
 import LocationCard from "./LocationCard";
-import { useState } from "react";
+interface IProps {
+  data: any;
+  setSelectedCardId: (id: string) => void;
+  pages: number;
+  setPage: (page: number) => void;
+  page: number;
+}
 
-function LocationList({ data, setSelectedCardId, pages }: any) {
-  const [active, setActive] = useState(1);
+function LocationList({
+  data,
+  setSelectedCardId,
+  pages,
+  setPage,
+  page,
+}: IProps) {
   const items = [];
 
-  const handleClick = (e: any, i: any) => {
-    setActive(i);
+  const handleClick = (e: any, page: number) => {
+    setPage(page);
   };
 
   for (let i = 1; i <= Math.floor(pages / 10); i++) {
     items.push(
       <Pagination.Item
         key={i}
-        active={i === active}
+        active={i === page}
         onClick={(e) => handleClick(e, i)}
       >
         {i}

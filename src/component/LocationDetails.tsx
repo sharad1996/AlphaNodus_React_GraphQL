@@ -1,6 +1,6 @@
 import LocationCard from "./LocationCard";
 import { GET_LOCATION_BY_ID } from "../Apollo/Queries";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { AiFillDelete } from "react-icons/ai";
 import { REMOVE_LOCATION } from "../Apollo/Mutation";
 import { Spinner } from "react-bootstrap";
@@ -8,13 +8,6 @@ import { useEffect, useState } from "react";
 
 function LocationDetails({ id }: { id?: string }) {
   const [locationDeleted, setLocationDeleted] = useState(false);
-  // const { loading, error, data } = useQuery(GET_LOCATION_BY_ID, {
-  //   variables: {
-  //     locationId: id || "37d9bba7-962b-48dd-bcfe-843819406d27",
-  //     tenant: "940e8edf-edd9-401d-a21a-10f866fbdb3f",
-  //   },
-  // });
-
   const [getLocation, { loading, error, data }] = useLazyQuery(
     GET_LOCATION_BY_ID,
     {
@@ -30,7 +23,7 @@ function LocationDetails({ id }: { id?: string }) {
     getLocation();
   }, []);
 
-  const [removeLocation, { data: deleting }] = useMutation(REMOVE_LOCATION, {
+  const [removeLocation] = useMutation(REMOVE_LOCATION, {
     variables: {
       locationRemoveId: data?.locationRead?.id,
       tenant: "940e8edf-edd9-401d-a21a-10f866fbdb3f",
@@ -41,7 +34,6 @@ function LocationDetails({ id }: { id?: string }) {
   const deleteLocation = () => {
     removeLocation()
       .then(() => {
-        // getLocation();
         setLocationDeleted(true);
       })
       .catch((error) => {

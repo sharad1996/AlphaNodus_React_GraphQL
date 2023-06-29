@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_LOCATIONS = gql`
-  query LocationList {
-    locationList(tenant: "940e8edf-edd9-401d-a21a-10f866fbdb3f") {
+  query LocationList($page: Int!) {
+    locationList(tenant: "940e8edf-edd9-401d-a21a-10f866fbdb3f", page: $page) {
       pages
       resources {
         address

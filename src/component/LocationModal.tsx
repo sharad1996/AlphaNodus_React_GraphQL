@@ -3,7 +3,20 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-function LocationModal({ show, toggleModal, item, onHandleSubmit }: any) {
+interface IProps {
+  show: boolean;
+  toggleModal: () => void;
+  item?: any;
+  onHandleSubmit: (value: any) => void;
+  addNewLocation?: boolean;
+}
+function LocationModal({
+  show,
+  toggleModal,
+  item,
+  onHandleSubmit,
+  addNewLocation,
+}: IProps) {
   const [state, setState] = useState({ ...item });
   const handleChange = (e: any) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -16,7 +29,9 @@ function LocationModal({ show, toggleModal, item, onHandleSubmit }: any) {
   return (
     <Modal show={show} onHide={toggleModal}>
       <Modal.Header closeButton>
-        <Modal.Title>Edit loaction detail </Modal.Title>
+        <Modal.Title>
+          {addNewLocation ? "Add" : "Edit"} location detail{" "}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>

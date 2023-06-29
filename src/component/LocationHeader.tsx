@@ -4,12 +4,19 @@ import LocationModal from "./LocationModal";
 import { useMutation } from "@apollo/client";
 import { CREATE_LOCATION } from "../Apollo/Mutation";
 
+interface IProps {
+  setFilterName: (name: string) => void;
+  filterName: string;
+  refresh: () => void;
+  filterWithStatus: (value: string) => void;
+}
+
 export default function LocationHeader({
   setFilterName,
   filterName,
   refresh,
   filterWithStatus,
-}: any) {
+}: IProps) {
   const [show, setShow] = useState(false);
 
   const [createLocation] = useMutation(CREATE_LOCATION);

@@ -1,9 +1,9 @@
 import Card from "react-bootstrap/Card";
-import Pill from "../Pill";
-import LocationModal from "../LocationModal";
+import Pill from "./Pill";
+import LocationModal from "./LocationModal";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { UPDATE_LOCATION } from "../../Apollo/Mutation";
+import { UPDATE_LOCATION } from "../Apollo/Mutation";
 
 function LocationCard({ item, setSelectedCardId, editable }: any) {
   const [show, setShow] = useState(false);
@@ -17,7 +17,6 @@ function LocationCard({ item, setSelectedCardId, editable }: any) {
   };
 
   const updateLocation = (values: any) => {
-    console.log("========= values ==========", values);
     delete values.__typename;
     if (values?.telecom.length) {
       values?.telecom.map((tele: any) => {

@@ -1,11 +1,16 @@
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import LocationHeader from "./LocationHeader";
 import LocationList from "./LocationList";
 import { GET_LOCATIONS } from "../Apollo/Queries";
 import { Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
-function LocationContainer({ setSelectedCardId }: any) {
+interface IProps {
+  setSelectedCardId: (value: string) => void;
+}
+function LocationContainer({ setSelectedCardId }: IProps) {
+  const [page, setPage] = useState(1);
+
   const [getLocation, { loading, error, data }] = useLazyQuery(GET_LOCATIONS, {
     fetchPolicy: "network-only",
   });
@@ -47,8 +52,12 @@ function LocationContainer({ setSelectedCardId }: any) {
   }, [loading, error, data]);
 
   useEffect(() => {
-    getLocation();
-  }, []);
+    getLocation({
+      variables: {
+        page: page,
+      },
+    });
+  }, [page]);
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -65,6 +74,8 @@ function LocationContainer({ setSelectedCardId }: any) {
           data={state?.data}
           setSelectedCardId={setSelectedCardId}
           pages={state?.pages}
+          page={page}
+          setPage={setPage}
         />
       )}
     </div>

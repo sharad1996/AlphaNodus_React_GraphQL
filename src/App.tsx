@@ -7,7 +7,7 @@ import { useState } from "react";
 
 function App() {
   // const { loading, error, data } = useQuery(GET_LOCATIONS);
-  const [selectedCardId, setSelectedCardId] = useState(null);
+  const [selectedCardId, setSelectedCardId] = useState<string>("");
 
   return (
     <Container className="App">
