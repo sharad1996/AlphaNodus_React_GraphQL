@@ -1,12 +1,12 @@
 import LocationCard from "./LocationCard";
 
-const locationList = ["location1", "location2"];
-
-function LocationList() {
+function LocationList({ data }: any) {
   return (
     <div>
-      {locationList.map((item) => (
-        <LocationCard item={item} />
+      {data.map((item: any) => (
+        <div key={item?.id}>
+          <LocationCard item={"item"} />
+        </div>
       ))}
     </div>
   );
