@@ -1,0 +1,59 @@
+.LocationHeaderContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.SearchInput {
+  width: 100%;
+  border-radius: 2xpx;
+}
+
+.AddLocationButton {
+  border: 0;
+  background-color: white;
+}
+
+.AddLocationButton:hover {
+  background-color: rgb(192, 192, 192);
+}
+
+.RefereshLocationButton {
+  background-color: white;
+  border: 1.5px solid black;
+  border-radius: 5px;
+  padding: 0 20px;
+}
+
+.FilterLocationButton {
+  font-weight: 400;
+  border-radius: 5px;
+  padding: 0 10px;
+  border: 1px solid rgba(128, 128, 128, 0.512);
+}
+
+.pill-container {
+  font-size: 15px;
+  padding: 5px 10px;
+  background-color: #eab10685;
+  border-radius: 100px;
+}
+
+.RowContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.no-location {
+  background: #ffc518;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.location-delete {
+  padding: 20px;
+  background-color: #ffc518;
+}
