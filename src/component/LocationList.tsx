@@ -5,7 +5,7 @@ function LocationList({ data }: any) {
     <div>
       {data.map((item: any) => (
         <div key={item?.id}>
-          <LocationCard item={"item"} />
+          <LocationCard item={item} />
         </div>
       ))}
     </div>

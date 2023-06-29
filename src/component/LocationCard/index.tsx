@@ -2,20 +2,28 @@ import Card from "react-bootstrap/Card";
 import Pill from "../Pill";
 
 function LocationCard({ item }: any) {
+  const hours = Math.floor(
+    (new Date().getTime() - item?.updatedAt) / (1000 * 60 * 60)
+  );
+
   return (
-    <Card style={{ marginBottom: "20px" }} className="mt-3">
+    <Card style={{ marginBottom: "20px", cursor: "pointer" }} className="mt-3">
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
+        <Card.Title>
+          <div className="d-flex justify-content-between">
+            <span>{item?.name}</span>
+            <span className="header-pill">
+              <Pill title={item?.status === "active" ? "Active" : "InActive"} />
+            </span>
+          </div>
+        </Card.Title>
         <Card.Text>
           <div>
-            <div className="header-container d-flex justify-content-between">
-              <span className="header-text">Header</span>
-              <span className="header-pill">
-                <Pill title="Active" />
-              </span>
+            <span className="header-text">{item?.address}</span>
+            <div className=" d-flex justify-content-between">
+              Some quick example text
+              <div>{hours || 0}h</div>
             </div>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
           </div>
         </Card.Text>
       </Card.Body>
