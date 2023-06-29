@@ -1,9 +1,13 @@
-import { useEffect } from "react";
 import LocationCard from "./LocationCard";
 import { GET_LOCATION_BY_ID } from "../Apollo/Queries";
+<<<<<<< HEAD
 import { useMutation, useQuery } from "@apollo/client";
 import { AiFillDelete } from "react-icons/ai";
 import { REMOVE_LOCATION } from "../Apollo/Mutation";
+=======
+import { useQuery } from "@apollo/client";
+import { Spinner } from "react-bootstrap";
+>>>>>>> 1ce03d995960616af0a6cb497374d85df90894cc
 
 function LocationDetails({ id }: { id?: string }) {
   const { loading, error, data } = useQuery(GET_LOCATION_BY_ID, {
@@ -19,8 +23,8 @@ function LocationDetails({ id }: { id?: string }) {
     },
   });
 
-  if (loading) return null;
   if (error) return `Error! ${error}`;
+<<<<<<< HEAD
   console.log("=========== data 121 1===========", data);
   const deleteLocation = () => {
     removeLocation()
@@ -29,13 +33,19 @@ function LocationDetails({ id }: { id?: string }) {
         console.error(error);
       });
   };
+=======
+>>>>>>> 1ce03d995960616af0a6cb497374d85df90894cc
   return (
     <>
       <div>
         delete location <AiFillDelete onClick={deleteLocation} />{" "}
       </div>
       <div>Location Container Details page</div>
-      <LocationCard />
+      {loading ? (
+        <Spinner animation="border" />
+      ) : (
+        <LocationCard editable item={data?.locationRead?.resource} />
+      )}
     </>
   );
 }

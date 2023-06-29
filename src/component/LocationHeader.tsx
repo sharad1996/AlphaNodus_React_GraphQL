@@ -1,10 +1,16 @@
+import { useState } from "react";
 import "./LocationHeader.css";
+import LocationModal from "./LocationModal";
 
 export default function LocationHeader({
   setFilterName,
   filterName,
   refresh,
 }: any) {
+  const [show, setShow] = useState(false);
+  const toggleModal = () => {
+    setShow(!show);
+  };
   return (
     <div className="LocationHeaderContainer">
       <div className="RowContainer">
@@ -12,7 +18,9 @@ export default function LocationHeader({
           Referesh
         </button>
         <span>Locations</span>
-        <button className="AddLocationButton">+</button>
+        <button className="AddLocationButton" onClick={toggleModal}>
+          +
+        </button>
       </div>
       <div>
         <input
@@ -29,6 +37,7 @@ export default function LocationHeader({
         <button className="FilterLocationButton">Filter 3</button>
         <button className="FilterLocationButton">Filter 4</button>
       </div>
+      <LocationModal toggleModal={toggleModal} show={show} addNewLocation />
     </div>
   );
 }
