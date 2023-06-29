@@ -16,6 +16,7 @@ function App() {
           <LocationContainer setSelectedCardId={setSelectedCardId} />
         </Col>
         <Col md={6}>
+          {/* @ts-ignore */}
           {selectedCardId && <LocationDetails id={selectedCardId} />}
         </Col>
       </Row>
