@@ -1,11 +1,26 @@
 import Card from "react-bootstrap/Card";
 import Pill from "./Pill";
+import { AiFillDelete } from "react-icons/ai";
+import { FiRefreshCcw } from "react-icons/fi";
 import LocationModal from "./LocationModal";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { UPDATE_LOCATION } from "../Apollo/Mutation";
-
-function LocationCard({ item, setSelectedCardId, editable }: any) {
+interface IProps {
+  showDeleteIcon?: boolean;
+  deleteLocation?: (value: string) => void;
+  item: any;
+  setSelectedCardId?: (value: string) => void;
+  editable?: boolean;
+  getLocation?: (e: any) => void;
+}
+function LocationCard({
+  item,
+  setSelectedCardId,
+  editable,
+  deleteLocation,
+  getLocation,
+}: IProps) {
   const [show, setShow] = useState(false);
   const hours = Math.floor(
     (new Date().getTime() - item?.updatedAt) / (1000 * 60 * 60)
@@ -38,12 +53,22 @@ function LocationCard({ item, setSelectedCardId, editable }: any) {
       <Card
         style={{ marginBottom: "20px", cursor: "pointer" }}
         className="mt-3"
-        onClick={() => (editable ? toggleModal() : setSelectedCardId(item?.id))}
+        onClick={() =>
+          // @ts-ignore
+          editable ? toggleModal() : setSelectedCardId(item?.id ? item?.id : "")
+        }
       >
         <Card.Body>
           <Card.Title>
             <div className="d-flex justify-content-between">
               <span>{item?.name}</span>
+              {editable && (
+                <span>
+                  {/* @ts-ignore */}
+                  <AiFillDelete onClick={deleteLocation} />
+                  <FiRefreshCcw onClick={getLocation} />
+                </span>
+              )}
               <span className="header-pill">
                 <Pill
                   title={item?.status === "active" ? "Active" : "InActive"}

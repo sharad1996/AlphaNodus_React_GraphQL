@@ -45,7 +45,7 @@ function LocationList({
           <Pagination>{items}</Pagination>
         </>
       ) : (
-        <h3>No location found</h3>
+        <h3 className="no-location">No location found</h3>
       )}
     </div>
   );

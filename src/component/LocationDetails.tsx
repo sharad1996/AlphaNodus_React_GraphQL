@@ -1,7 +1,6 @@
 import LocationCard from "./LocationCard";
 import { GET_LOCATION_BY_ID } from "../Apollo/Queries";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { AiFillDelete } from "react-icons/ai";
 import { REMOVE_LOCATION } from "../Apollo/Mutation";
 import { Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
@@ -21,7 +20,8 @@ function LocationDetails({ id }: { id?: string }) {
 
   useEffect(() => {
     getLocation();
-  }, []);
+    setLocationDeleted(false);
+  }, [id]);
 
   const [removeLocation] = useMutation(REMOVE_LOCATION, {
     variables: {
@@ -31,7 +31,8 @@ function LocationDetails({ id }: { id?: string }) {
   });
 
   if (error) return `Error! ${error}`;
-  const deleteLocation = () => {
+  const deleteLocation = (e: any) => {
+    e.stopPropagation();
     removeLocation()
       .then(() => {
         setLocationDeleted(true);
@@ -41,21 +42,30 @@ function LocationDetails({ id }: { id?: string }) {
       });
   };
 
+  const onHandleGetLocation = (e: any) => {
+    e.stopPropagation();
+    getLocation();
+  };
+
   return (
     <>
       {locationDeleted && (
-        <div>You've deleted this location, please select another item</div>
+        <div className="location-delete">
+          You've deleted this location, please select another item
+        </div>
       )}
       {!locationDeleted && (
         <>
-          <div>
-            delete location <AiFillDelete onClick={deleteLocation} />{" "}
-          </div>
-          <div>Location Container Details page</div>
           {loading ? (
             <Spinner animation="border" />
           ) : (
-            <LocationCard editable item={data?.locationRead?.resource} />
+            <LocationCard
+              editable
+              item={data?.locationRead?.resource}
+              showDeleteIcon
+              deleteLocation={deleteLocation}
+              getLocation={onHandleGetLocation}
+            />
           )}
         </>
       )}

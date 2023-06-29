@@ -44,3 +44,16 @@
   display: flex;
   justify-content: space-between;
 }
+
+.no-location {
+  background: #ffc518;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.location-delete {
+  padding: 20px;
+  background-color: #ffc518;
+}
