@@ -28,3 +28,15 @@ export const GET_LOCATIONS = gql`
     }
   }
 `;
+export const GET_LOCATION_BY_ID = gql`
+  query LocationRead($locationId: String!, $tenant: String!) {
+    locationRead(id: $locationId, tenant: $tenant) {
+      id
+      resource {
+        address
+        alias
+        description
+      }
+    }
+  }
+`;
