@@ -7,10 +7,22 @@ import { useEffect, useState } from "react";
 
 function LocationContainer({ setSelectedCardId }: any) {
   const { loading, error, data } = useQuery(GET_LOCATIONS);
-  const [state, setState] = useState({
+  const [state, setState] = useState<any>({
     loading: false,
     data: [],
   });
+  const [filterName, setFilterName] = useState("");
+
+  useEffect(() => {
+    const arr = [...(data?.locationList?.resources || [])];
+    const filteredLocation = arr.filter((item: any) =>
+      item?.name.toLowerCase().includes(filterName.toLowerCase())
+    );
+    setState({
+      ...state,
+      data: filteredLocation,
+    });
+  }, [filterName]);
 
   // const HandleReferesh = () => {
   //   const { loading, data } = useQuery(GET_LOCATIONS);
@@ -29,7 +41,7 @@ function LocationContainer({ setSelectedCardId }: any) {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <LocationHeader />
+      <LocationHeader setFilterName={setFilterName} filterName={filterName} />
       {loading ? (
         <Spinner animation="border" />
       ) : (
