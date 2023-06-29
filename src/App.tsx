@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import "./App.css";
-import LocationList from "./component/LocationList";
+import LocationContainer from "./component/LocationContainer";
 import { GET_LOCATIONS } from "./Apollo/Queries";
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
   console.log("============ data  1===========", data);
   return (
     <div className="App">
-      <LocationList />
+      <LocationContainer />
     </div>
   );
 }
