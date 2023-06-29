@@ -8,6 +8,7 @@ export default function LocationHeader({
   setFilterName,
   filterName,
   refresh,
+  filterWithStatus,
 }: any) {
   const [show, setShow] = useState(false);
 
@@ -49,8 +50,18 @@ export default function LocationHeader({
         />
       </div>
       <div className="RowContainer">
-        <button className="FilterLocationButton">Filter 1</button>
-        <button className="FilterLocationButton">Filter 2</button>
+        <button
+          className="FilterLocationButton"
+          onClick={() => filterWithStatus("active")}
+        >
+          Filter status active
+        </button>
+        <button
+          className="FilterLocationButton"
+          onClick={() => filterWithStatus("inactive")}
+        >
+          Filter status inactive
+        </button>
         <button className="FilterLocationButton">Filter 3</button>
         <button className="FilterLocationButton">Filter 4</button>
       </div>

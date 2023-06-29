@@ -16,6 +16,17 @@ function LocationContainer({ setSelectedCardId }: any) {
   });
   const [filterName, setFilterName] = useState("");
 
+  const filterWithStatus = (status: any) => {
+    const arr = [...(data?.locationList?.resources || [])];
+    const filteredLocation = arr.filter(
+      (item: any) => item?.status.toLowerCase() === status
+    );
+    setState({
+      ...state,
+      data: filteredLocation,
+    });
+  };
+
   useEffect(() => {
     const arr = [...(data?.locationList?.resources || [])];
     const filteredLocation = arr.filter((item: any) =>
@@ -27,20 +38,11 @@ function LocationContainer({ setSelectedCardId }: any) {
     });
   }, [filterName]);
 
-  const HandleReferesh = () => {
-    // const { loading, data } = useQuery(GET_LOCATIONS);
-    // setState({
-    //   loading: loading,
-    //   data: data?.locationList?.resources || [],
-
-    // });
-    getLocation();
-  };
-
   useEffect(() => {
     setState({
       loading: loading,
       data: data?.locationList?.resources || [],
+      pages: data?.locationList?.pages,
     });
   }, [loading, error, data]);
 
@@ -54,6 +56,7 @@ function LocationContainer({ setSelectedCardId }: any) {
         setFilterName={setFilterName}
         filterName={filterName}
         refresh={getLocation}
+        filterWithStatus={filterWithStatus}
       />
       {loading ? (
         <Spinner animation="border" />
@@ -61,6 +64,7 @@ function LocationContainer({ setSelectedCardId }: any) {
         <LocationList
           data={state?.data}
           setSelectedCardId={setSelectedCardId}
+          pages={state?.pages}
         />
       )}
     </div>
