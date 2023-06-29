@@ -1,13 +1,17 @@
 import Card from "react-bootstrap/Card";
 import Pill from "../Pill";
 
-function LocationCard({ item }: any) {
+function LocationCard({ item, setSelectedCardId }: any) {
   const hours = Math.floor(
     (new Date().getTime() - item?.updatedAt) / (1000 * 60 * 60)
   );
 
   return (
-    <Card style={{ marginBottom: "20px", cursor: "pointer" }} className="mt-3">
+    <Card
+      style={{ marginBottom: "20px", cursor: "pointer" }}
+      className="mt-3"
+      onClick={() => setSelectedCardId(item?.id)}
+    >
       <Card.Body>
         <Card.Title>
           <div className="d-flex justify-content-between">
@@ -17,10 +21,10 @@ function LocationCard({ item }: any) {
             </span>
           </div>
         </Card.Title>
-        <Card.Text>
+        <Card.Text style={{ textAlign: "left" }}>
           <div>
-            <span className="header-text">{item?.address}</span>
-            <div className=" d-flex justify-content-between">
+            <span>{item?.address}</span>
+            <div className="d-flex justify-content-between">
               Some quick example text
               <div>{hours || 0}h</div>
             </div>

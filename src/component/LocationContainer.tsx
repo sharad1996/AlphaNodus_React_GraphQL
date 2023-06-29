@@ -5,7 +5,7 @@ import { GET_LOCATIONS } from "../Apollo/Queries";
 import { Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
-function LocationContainer() {
+function LocationContainer({ setSelectedCardId }: any) {
   const { loading, error, data } = useQuery(GET_LOCATIONS);
   const [state, setState] = useState({
     loading: false,
@@ -28,12 +28,15 @@ function LocationContainer() {
   }, [loading, error, data]);
 
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       <LocationHeader />
       {loading ? (
         <Spinner animation="border" />
       ) : (
-        <LocationList data={state?.data} />
+        <LocationList
+          data={state?.data}
+          setSelectedCardId={setSelectedCardId}
+        />
       )}
     </div>
   );
