@@ -36,6 +36,22 @@ export const GET_LOCATION_BY_ID = gql`
         address
         alias
         description
+        id
+        managingOrganization
+        name
+        npi
+        partOf
+        status
+        tag
+        taxId
+        telecom {
+          rank
+          system
+          use
+          value
+        }
+        type
+        updatedAt
       }
     }
   }

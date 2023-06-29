@@ -3,11 +3,16 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-function LocationModal({ show, toggleModal, item }: any) {
+function LocationModal({ show, toggleModal, item, onHandleSubmit }: any) {
   const [state, setState] = useState({ ...item });
   const handleChange = (e: any) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
+
+  const onSubmitValue = () => {
+    onHandleSubmit(state);
+  };
+
   return (
     <Modal show={show} onHide={toggleModal}>
       <Modal.Header closeButton>
@@ -94,7 +99,7 @@ function LocationModal({ show, toggleModal, item }: any) {
         <Button variant="secondary" onClick={toggleModal}>
           Close
         </Button>
-        <Button variant="primary" onClick={toggleModal}>
+        <Button variant="primary" onClick={onSubmitValue}>
           Save Changes
         </Button>
       </Modal.Footer>

@@ -1,21 +1,35 @@
 import LocationCard from "./LocationCard";
 import { GET_LOCATION_BY_ID } from "../Apollo/Queries";
-<<<<<<< HEAD
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { AiFillDelete } from "react-icons/ai";
 import { REMOVE_LOCATION } from "../Apollo/Mutation";
-=======
-import { useQuery } from "@apollo/client";
 import { Spinner } from "react-bootstrap";
->>>>>>> 1ce03d995960616af0a6cb497374d85df90894cc
+import { useEffect, useState } from "react";
 
 function LocationDetails({ id }: { id?: string }) {
-  const { loading, error, data } = useQuery(GET_LOCATION_BY_ID, {
-    variables: {
-      locationId: id || "37d9bba7-962b-48dd-bcfe-843819406d27",
-      tenant: "940e8edf-edd9-401d-a21a-10f866fbdb3f",
-    },
-  });
+  const [locationDeleted, setLocationDeleted] = useState(false);
+  // const { loading, error, data } = useQuery(GET_LOCATION_BY_ID, {
+  //   variables: {
+  //     locationId: id || "37d9bba7-962b-48dd-bcfe-843819406d27",
+  //     tenant: "940e8edf-edd9-401d-a21a-10f866fbdb3f",
+  //   },
+  // });
+
+  const [getLocation, { loading, error, data }] = useLazyQuery(
+    GET_LOCATION_BY_ID,
+    {
+      fetchPolicy: "network-only",
+      variables: {
+        locationId: id || "37d9bba7-962b-48dd-bcfe-843819406d27",
+        tenant: "940e8edf-edd9-401d-a21a-10f866fbdb3f",
+      },
+    }
+  );
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
   const [removeLocation, { data: deleting }] = useMutation(REMOVE_LOCATION, {
     variables: {
       locationRemoveId: data?.locationRead?.id,
@@ -24,27 +38,34 @@ function LocationDetails({ id }: { id?: string }) {
   });
 
   if (error) return `Error! ${error}`;
-<<<<<<< HEAD
-  console.log("=========== data 121 1===========", data);
   const deleteLocation = () => {
     removeLocation()
-      .then(() => {})
+      .then(() => {
+        // getLocation();
+        setLocationDeleted(true);
+      })
       .catch((error) => {
         console.error(error);
       });
   };
-=======
->>>>>>> 1ce03d995960616af0a6cb497374d85df90894cc
+
   return (
     <>
-      <div>
-        delete location <AiFillDelete onClick={deleteLocation} />{" "}
-      </div>
-      <div>Location Container Details page</div>
-      {loading ? (
-        <Spinner animation="border" />
-      ) : (
-        <LocationCard editable item={data?.locationRead?.resource} />
+      {locationDeleted && (
+        <div>You've deleted this location, please select another item</div>
+      )}
+      {!locationDeleted && (
+        <>
+          <div>
+            delete location <AiFillDelete onClick={deleteLocation} />{" "}
+          </div>
+          <div>Location Container Details page</div>
+          {loading ? (
+            <Spinner animation="border" />
+          ) : (
+            <LocationCard editable item={data?.locationRead?.resource} />
+          )}
+        </>
       )}
     </>
   );

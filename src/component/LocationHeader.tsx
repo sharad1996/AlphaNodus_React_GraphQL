@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./LocationHeader.css";
 import LocationModal from "./LocationModal";
+import { useMutation } from "@apollo/client";
+import { CREATE_LOCATION } from "../Apollo/Mutation";
 
 export default function LocationHeader({
   setFilterName,
@@ -8,9 +10,24 @@ export default function LocationHeader({
   refresh,
 }: any) {
   const [show, setShow] = useState(false);
+
+  const [createLocation] = useMutation(CREATE_LOCATION);
+
   const toggleModal = () => {
     setShow(!show);
   };
+
+  const createNewLocation = (values: any) => {
+    createLocation({
+      variables: {
+        tenant: "940e8edf-edd9-401d-a21a-10f866fbdb3f",
+        requestBody: { ...values },
+      },
+    }).then(() => {
+      toggleModal();
+    });
+  };
+
   return (
     <div className="LocationHeaderContainer">
       <div className="RowContainer">
@@ -37,7 +54,12 @@ export default function LocationHeader({
         <button className="FilterLocationButton">Filter 3</button>
         <button className="FilterLocationButton">Filter 4</button>
       </div>
-      <LocationModal toggleModal={toggleModal} show={show} addNewLocation />
+      <LocationModal
+        toggleModal={toggleModal}
+        show={show}
+        addNewLocation
+        onHandleSubmit={createNewLocation}
+      />
     </div>
   );
 }
