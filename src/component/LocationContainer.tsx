@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import LocationHeader from "./LocationHeader";
 import LocationList from "./LocationList";
 import { GET_LOCATIONS } from "../Apollo/Queries";
@@ -6,7 +6,10 @@ import { Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
 function LocationContainer({ setSelectedCardId }: any) {
-  const { loading, error, data } = useQuery(GET_LOCATIONS);
+  const [getLocation, { loading, error, data }] = useLazyQuery(GET_LOCATIONS, {
+    fetchPolicy: "network-only",
+  });
+
   const [state, setState] = useState<any>({
     loading: false,
     data: [],
@@ -24,13 +27,15 @@ function LocationContainer({ setSelectedCardId }: any) {
     });
   }, [filterName]);
 
-  // const HandleReferesh = () => {
-  //   const { loading, data } = useQuery(GET_LOCATIONS);
-  //   setState({
-  //     loading: loading,
-  //     data: data?.locationList?.resources || [],
-  //   });
-  // };
+  const HandleReferesh = () => {
+    // const { loading, data } = useQuery(GET_LOCATIONS);
+    // setState({
+    //   loading: loading,
+    //   data: data?.locationList?.resources || [],
+
+    // });
+    getLocation();
+  };
 
   useEffect(() => {
     setState({
@@ -39,9 +44,17 @@ function LocationContainer({ setSelectedCardId }: any) {
     });
   }, [loading, error, data]);
 
+  useEffect(() => {
+    getLocation();
+  }, []);
+
   return (
     <div style={{ textAlign: "center" }}>
-      <LocationHeader setFilterName={setFilterName} filterName={filterName} />
+      <LocationHeader
+        setFilterName={setFilterName}
+        filterName={filterName}
+        refresh={getLocation}
+      />
       {loading ? (
         <Spinner animation="border" />
       ) : (

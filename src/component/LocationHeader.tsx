@@ -1,10 +1,16 @@
 import "./LocationHeader.css";
 
-export default function LocationHeader({ setFilterName, filterName }: any) {
+export default function LocationHeader({
+  setFilterName,
+  filterName,
+  refresh,
+}: any) {
   return (
     <div className="LocationHeaderContainer">
       <div className="RowContainer">
-        <button className="RefereshLocationButton">Referesh</button>
+        <button className="RefereshLocationButton" onClick={refresh}>
+          Referesh
+        </button>
         <span>Locations</span>
         <button className="AddLocationButton">+</button>
       </div>
