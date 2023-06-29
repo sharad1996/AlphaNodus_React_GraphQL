@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import LocationCard from "./LocationCard";
 import { GET_LOCATION_BY_ID } from "../Apollo/Queries";
 import { useQuery } from "@apollo/client";
+import { Spinner } from "react-bootstrap";
 
 function LocationDetails({ id }: { id?: string }) {
   const { loading, error, data } = useQuery(GET_LOCATION_BY_ID, {
@@ -11,13 +11,15 @@ function LocationDetails({ id }: { id?: string }) {
     },
   });
 
-  if (loading) return null;
   if (error) return `Error! ${error}`;
-  console.log("=========== data 121 ===========", data);
   return (
     <>
       <div>Location Container Details page</div>
-      <LocationCard />
+      {loading ? (
+        <Spinner animation="border" />
+      ) : (
+        <LocationCard editable item={data?.locationRead?.resource} />
+      )}
     </>
   );
 }
