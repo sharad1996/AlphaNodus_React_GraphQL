@@ -39,3 +39,8 @@
   background-color: #eab10685;
   border-radius: 100px;
 }
+
+.RowContainer {
+  display: flex;
+  justify-content: space-between;
+}

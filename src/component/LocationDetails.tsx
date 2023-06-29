@@ -1,6 +1,6 @@
 import LocationCard from "./LocationCard";
 
-function LocationDetails() {
+function LocationDetails({ id }: { id: string }) {
   return (
     <>
       <div>Location Container Details page</div>
